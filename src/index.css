@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Global Styles */
+/* Define global text color */
 body {
-    @apply bg-background text-text;
+    color: #1F2937; /* Tailwind's gray-800 */
 }

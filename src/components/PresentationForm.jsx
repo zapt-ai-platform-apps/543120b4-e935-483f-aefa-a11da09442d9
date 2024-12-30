@@ -1,44 +1,51 @@
 import React, { useState } from 'react';
 
-export default function PresentationForm({ onGenerate, loading }) {
+export default function PresentationForm({ onSubmit, loading }) {
     const [topic, setTopic] = useState('');
-    const [slides, setSlides] = useState(5);
+    const [numberOfSlides, setNumberOfSlides] = useState(5);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onGenerate(topic, slides);
+        if (!topic || numberOfSlides <= 0) {
+            return;
+        }
+        onSubmit(topic, numberOfSlides);
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md">
-            <h2 className="text-xl mb-4">Create Presentation</h2>
+        <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-full max-w-md">
+            <h2 className="text-xl font-semibold mb-4">Create Presentation</h2>
             <div className="mb-4">
-                <label className="block mb-2" htmlFor="topic">Topic</label>
+                <label htmlFor="topic" className="block text-gray-700 mb-2">
+                    Topic
+                </label>
                 <input
                     type="text"
                     id="topic"
+                    className="w-full px-3 py-2 border rounded box-border text-gray-900"
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded box-border"
+                    placeholder="Enter presentation topic"
                     required
                 />
             </div>
             <div className="mb-4">
-                <label className="block mb-2" htmlFor="slides">Number of Slides</label>
+                <label htmlFor="slides" className="block text-gray-700 mb-2">
+                    Number of Slides
+                </label>
                 <input
                     type="number"
                     id="slides"
-                    value={slides}
-                    onChange={(e) => setSlides(e.target.value)}
+                    className="w-full px-3 py-2 border rounded box-border text-gray-900"
+                    value={numberOfSlides}
+                    onChange={(e) => setNumberOfSlides(parseInt(e.target.value))}
                     min="1"
-                    max="100"
-                    className="w-full p-2 border border-gray-300 rounded box-border"
                     required
                 />
             </div>
             <button
                 type="submit"
-                className={`w-full p-2 bg-blue-500 text-white rounded cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`w-full px-4 py-2 bg-blue-500 text-white rounded cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 disabled={loading}
             >
                 {loading ? 'Generating...' : 'Generate Presentation'}
