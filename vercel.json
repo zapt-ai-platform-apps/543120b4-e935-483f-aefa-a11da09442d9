@@ -1,8 +1,18 @@
 {
     "rewrites": [
         {
+            "source": "/api/generate-presentation",
+            "destination": "/src/api/generatePresentation.js"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
-    ]
+    ],
+    "functions": {
+        "src/api/generatePresentation.js": {
+            "includeFiles": "../drizzle/schema.js",
+            "runtime": "nodejs18.x"
+        }
+    }
 }

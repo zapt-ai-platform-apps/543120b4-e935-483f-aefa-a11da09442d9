@@ -7,12 +7,13 @@ import * as Sentry from '@sentry/browser';
 Sentry.init({
   dsn: import.meta.env.VITE_PUBLIC_SENTRY_DSN,
   environment: import.meta.env.VITE_PUBLIC_APP_ENV,
+  integrations: [Sentry.BrowserTracingIntegration()],
   initialScope: {
     tags: {
       type: 'frontend',
-      projectId: import.meta.env.VITE_PUBLIC_APP_ID,
-    },
-  },
+      projectId: import.meta.env.VITE_PUBLIC_APP_ID
+    }
+  }
 });
 
 // Add PWA support
@@ -36,6 +37,10 @@ if (!window.location.hostname.includes('vercel.app')) {
   script.setAttribute('data-website-id', import.meta.env.VITE_PUBLIC_UMAMI_WEBSITE_ID);
   document.head.appendChild(script);
 }
+
+// Strategic Logging
+console.log('App initialized');
+console.log('Current environment:', import.meta.env.VITE_PUBLIC_APP_ENV);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
